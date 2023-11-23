@@ -1,0 +1,53 @@
+Hello Fang Xiang,
+
+currently I‘m at ATESTEO’s new facility in East Lansing (Michigan/US) and setting up the IT system.
+
+I reviewed the most aspects of GRC Server Environment Upgade-GRC-V2.xlsx
+My comments and suggestions are marked RED.
+
+Some other things:
+-        The Upgrade project will become quite complex, especially with the migration from BakcupExec to VEEAM, but there is no other way for the future.
+-        You will need a new server rack in the 2nd room. Do we have enough space? Do we have enough power connectors in room 2?
+-        Do we have enough fibres between Room 1 and Room 2 and what is the specification of these fibre cables (single mode or multi mode)?
+
+Looking forward to your comments and answer.
+Kind regards
+
+
+方翔你好，
+
+目前，我在ATESTEO位于美国密歇根州东兰辛的新工厂，正在设置IT系统。
+
+我回顾了GRC服务器环境Upgade-GRC-V2.xlsx的大部分内容。
+我的评论和建议标为红色。
+
+其他一些事情：
+-升级项目将变得相当复杂，特别是从BakcuExec迁移到Veeam，但未来没有其他方法。
+-您需要在第二个房间安装一个新的服务器机架。我们有足够的空间吗？2号房间有足够的电源插头吗？
+-1号房间和2号房间之间是否有足够的光纤？这些光纤电缆的规格是什么(单模还是多模)？
+
+期待您的评论和答复。
+亲切的问候
+
+VMware VSAN 设计规则
+
+
+1、集群节点数量：3-64台主机（生产环境最少4节点起，5.5版本支持32节点，6.0版本支持64节点），配置万兆网卡，主机规格应满足VSAN兼容性要求。
+
+2、每台主机需配置磁盘组，每台主机的磁盘组数量最少1个，最多5个。
+
+3、磁盘组由两部分组成：缓存层+存储层，缓存层必须使用闪存设备（一般为SSD）；存储层可选择全闪存设备（SSD）或全机械硬盘（HDD）。
+
+4、每个磁盘组最少需配置2块盘（缓存层1块+存储层1块），最多可配置8块盘（缓存层1块+存储层7块）；缓存层只能有1块盘。
+
+5、存储设备（SSD+HDD）需平均分配到各个主机，否则会影响集群可支持的虚拟机数量。
+
+6、存储层配置多块的小容量盘比配置少数的大容量盘性能表现要好。
+
+7、混合模式下，缓存的70%用作热点数据块读缓存，30%用于写缓存；全闪存模式下，缓存全部被用作写缓存，因为数据盘的读取性能足够高。
+
+8、SSD容量建议配置为HDD容量的10%以上，最大支持600G作为缓存使用。
+
+9、同一个集群不支持混合模式与全闪存模式共存。
+
+10、更多的磁盘组性能更好，也能减少故障域
